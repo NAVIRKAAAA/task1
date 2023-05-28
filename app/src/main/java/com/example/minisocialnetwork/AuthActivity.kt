@@ -72,12 +72,20 @@ class AuthActivity : AppCompatActivity() {
 
     private fun dataValidation() {
         binding.textInputEditTextEmail.doOnTextChanged { text, _, _, _ ->
-            binding.textViewInvalidEmail.visibility =
-                if (isValidEmail(text.toString())) View.INVISIBLE else View.VISIBLE
+            if (!text.isNullOrEmpty()) {
+                binding.textViewInvalidEmail.visibility =
+                    if (isValidEmail(text.toString())) View.INVISIBLE else View.VISIBLE
+            } else {
+                binding.textViewInvalidEmail.visibility = View.INVISIBLE
+            }
         }
         binding.textInputEditTextPassword.doOnTextChanged { text, _, _, _ ->
-            binding.textViewInvalidPassword.visibility =
-                if (isValidPassword(text.toString())) View.INVISIBLE else View.VISIBLE
+            if (!text.isNullOrEmpty()) {
+                binding.textViewInvalidPassword.visibility =
+                    if (isValidPassword(text.toString())) View.INVISIBLE else View.VISIBLE
+            } else {
+                binding.textViewInvalidPassword.visibility = View.INVISIBLE
+            }
         }
     }
 }
