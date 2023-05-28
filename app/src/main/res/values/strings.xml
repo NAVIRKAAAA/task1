@@ -19,4 +19,7 @@
     <string name="home_address">Home address</string>
     <string name="view_my_contacts">VIEW MY CONTACTS</string>
     <string name="edit_profile">Edit profile</string>
+    <string name="invalid_email">invalid email</string>
+    <string name="invalid_password">invalid password</string>
+    <string name="logout">Logout</string>
 </resources>
