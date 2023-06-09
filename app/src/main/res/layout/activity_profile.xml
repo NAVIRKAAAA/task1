@@ -12,7 +12,6 @@
         android:background="@color/background"
         app:layout_constraintBottom_toTopOf="@id/viewBottom"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -67,7 +66,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textViewSettings"
         app:layout_constraintVertical_bias="0.25"
-        app:shapeAppearanceOverlay="@style/rounded" />
+        app:shapeAppearanceOverlay="@style/rounded"
+        tools:src="@tools:sample/avatars" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewName"
@@ -75,13 +75,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/normal_margin"
         android:fontFamily="@font/example1"
-        android:text="@string/full_name"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="@dimen/text_large_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageViewProfileImage" />
+        app:layout_constraintTop_toBottomOf="@id/imageViewProfileImage"
+        tools:text="@string/full_name" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewCareer"
@@ -112,33 +112,37 @@
         app:layout_constraintTop_toBottomOf="@id/textViewCareer"
         app:layout_constraintVertical_chainStyle="packed" />
 
-    <ImageView
-        android:id="@+id/iconFacebook"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_facebook"
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/buttonEditProfile"
-        app:layout_constraintStart_toStartOf="@id/guidelineIconStart"
-        app:layout_constraintTop_toTopOf="@id/viewBottom" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/viewTop">
 
-    <ImageView
-        android:id="@+id/iconLinkedIn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_linkedin"
-        app:layout_constraintBottom_toTopOf="@id/buttonEditProfile"
-        app:layout_constraintEnd_toEndOf="@id/guidelineIconEnd"
-        app:layout_constraintStart_toStartOf="@id/guidelineIconStart"
-        app:layout_constraintTop_toTopOf="@id/viewBottom" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iconFacebook"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_facebook" />
 
-    <ImageView
-        android:id="@+id/iconInstagram"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_instagram"
-        app:layout_constraintBottom_toTopOf="@id/buttonEditProfile"
-        app:layout_constraintEnd_toEndOf="@id/guidelineIconEnd"
-        app:layout_constraintTop_toTopOf="@id/viewBottom" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iconLinkedIn"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_linkedin" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iconInstagram"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_instagram" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <Button
         android:id="@+id/buttonEditProfile"
@@ -169,19 +173,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineIconStart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.15" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineIconEnd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.85" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

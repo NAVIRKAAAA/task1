@@ -129,7 +129,7 @@
         app:layout_constraintBottom_toTopOf="@id/buttonEditProfile"
         app:layout_constraintEnd_toEndOf="@id/guidelineIconEnd"
         app:layout_constraintStart_toStartOf="@id/guidelineIconStart"
-        app:layout_constraintTop_toTopOf="@id/viewBottom" />
+        app:layout_constraintTop_toBottomOf="@id/viewTop" />
 
     <ImageView
         android:id="@+id/iconInstagram"

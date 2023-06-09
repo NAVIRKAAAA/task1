@@ -10,16 +10,19 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
 import com.example.minisocialnetwork.databinding.ActivitySignUpBinding
 import com.example.minisocialnetwork.utils.Constants
+import com.example.minisocialnetwork.utils.ext.invisible
+import com.example.minisocialnetwork.utils.ext.visibleIf
 
 class AuthActivity : AppCompatActivity() {
-    private lateinit var binding: ActivitySignUpBinding
+    private val binding: ActivitySignUpBinding by lazy {
+        ActivitySignUpBinding.inflate(layoutInflater)
+    }
     private val sharedPreferences: SharedPreferences by lazy {
         getSharedPreferences(Constants.KEY_SHARED_PREFERENCES, Context.MODE_PRIVATE)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySignUpBinding.inflate(layoutInflater)
         isRememberMe()
         setContentView(binding.root)
         setListeners()
@@ -35,9 +38,10 @@ class AuthActivity : AppCompatActivity() {
     }
 
     private fun setListeners() {
-        binding.buttonRegister.setOnClickListener {
-            with(binding) {
-                if (isValidEmail(textInputEditTextEmail.text.toString()) &&
+        with(binding) {
+            buttonRegister.setOnClickListener {
+                if (
+                    isValidEmail(textInputEditTextEmail.text.toString()) &&
                     isValidPassword(textInputEditTextPassword.text.toString())
                 ) {
                     if (checkboxRemember.isChecked) saveData()
@@ -54,12 +58,10 @@ class AuthActivity : AppCompatActivity() {
         }
     }
 
-    private fun isValidEmail(email: String): Boolean {
-        return Patterns.EMAIL_ADDRESS.matcher(email).matches()
-    }
+    private fun isValidEmail(email: String) = Patterns.EMAIL_ADDRESS.matcher(email).matches()
 
     private fun isValidPassword(password: String): Boolean {
-        return password.length >= 7 && password.contains(Regex("[A-Z]")) &&
+        return password.length >= MINIMUM_PASSWORD_LENGTH && password.contains(Regex("[A-Z]")) &&
                 password.contains(Regex("[a-z]")) &&
                 password.contains(Regex("\\d")) && !password.contains(' ')
     }
@@ -71,21 +73,24 @@ class AuthActivity : AppCompatActivity() {
     }
 
     private fun dataValidation() {
-        binding.textInputEditTextEmail.doOnTextChanged { text, _, _, _ ->
-            if (!text.isNullOrEmpty()) {
-                binding.textViewInvalidEmail.visibility =
-                    if (isValidEmail(text.toString())) View.INVISIBLE else View.VISIBLE
-            } else {
-                binding.textViewInvalidEmail.visibility = View.INVISIBLE
+        with(binding) {
+            textInputEditTextEmail.doOnTextChanged { text, _, _, _ ->
+                textViewInvalidEmail.visibleIf(
+                    !isValidEmail(text.toString()) && !text.isNullOrEmpty()
+                )
+            }
+            textInputEditTextPassword.doOnTextChanged { text, _, _, _ ->
+                if (!text.isNullOrEmpty()) {
+                    textViewInvalidPassword.visibility =
+                        if (isValidPassword(text.toString())) View.INVISIBLE else View.VISIBLE
+                } else {
+                    textViewInvalidPassword.invisible()
+                }
             }
         }
-        binding.textInputEditTextPassword.doOnTextChanged { text, _, _, _ ->
-            if (!text.isNullOrEmpty()) {
-                binding.textViewInvalidPassword.visibility =
-                    if (isValidPassword(text.toString())) View.INVISIBLE else View.VISIBLE
-            } else {
-                binding.textViewInvalidPassword.visibility = View.INVISIBLE
-            }
-        }
+    }
+
+    private companion object {
+        private const val MINIMUM_PASSWORD_LENGTH = 7
     }
 }

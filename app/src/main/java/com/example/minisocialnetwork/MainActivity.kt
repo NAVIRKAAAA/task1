@@ -3,13 +3,10 @@ package com.example.minisocialnetwork
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Button
-import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.example.minisocialnetwork.databinding.ActivityProfileBinding
 import com.example.minisocialnetwork.utils.Constants
-import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
@@ -39,19 +36,18 @@ class MainActivity : AppCompatActivity() {
 
     private fun parsingAndSetName(email: String) {
         val elements = email.split("@")[0].replace(".", " ").split(" ")
-        val textView = findViewById<TextView>(R.id.textViewName)
-        if (elements.size >= 2) {
-            val name = elements[0].replaceFirstChar { it.titlecase(Locale.getDefault()) }
-            val lastName = elements[1].replaceFirstChar { it.titlecase(Locale.getDefault()) }
-            textView.text = "$name $lastName"
+        binding.textViewName.text = if (elements.size >= 2) {
+            val name = elements[0].replaceFirstChar { it.uppercase() }
+            val lastName = elements[1].replaceFirstChar { it.titlecase() }
+            val fullName = "$name $lastName"
+            fullName
         } else {
-            textView.text = elements[0]
+            elements[0]
         }
     }
 
     private fun isLogout() {
-        val button = findViewById<Button>(R.id.buttonLogout)
-        button.setOnClickListener {
+        binding.buttonLogout.setOnClickListener {
             val editor = sharedPreferences.edit()
             editor.remove(Constants.KEY_LAST_FULL_NAME)
             editor.remove(Constants.KEY_REMEMBER_ME)
